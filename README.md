@@ -71,5 +71,6 @@ To test the form submission, create a `.env` file in the root with the following
 VUE_APP_API_KEY= Your API key
 
 **Then run:**
+
 npm install  
 npm run serve
