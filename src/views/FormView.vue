@@ -34,18 +34,56 @@ export default defineComponent({
     });
 
     const submitted = ref(false);
-    const onSubmit = () => {
-      submitted.value = true;
+    const onSubmit = async () => {
+      try {
+        // Clean phone number of any non digit
+        const cleanForm = {
+          ...form,
+          phone: form.phone.replace(/\D/g, ""),
+        };
 
-      // Reset form after 5 seconds
-      setTimeout(() => {
-        submitted.value = false;
-        form.first = "";
-        form.last = "";
-        form.email = "";
-        form.phone = "";
-        form.company = "";
-      }, 5000);
+        console.log(
+          "Submitting this data:",
+          JSON.stringify(cleanForm, null, 2)
+        );
+
+        const response = await fetch(
+          `https://dev-api-api.hiring-test.experientialpreview.com/api/lead/${process.env.VUE_APP_API_KEY}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(cleanForm),
+          }
+        );
+
+        const responseData = await response.json();
+        console.log("API response:", responseData);
+
+        if (!response.ok) {
+          console.error("Validation errors:", responseData.errors);
+          throw new Error(
+            `API returned ${response.status}: ${
+              responseData.message || "Unknown error"
+            }\nDetails: ${JSON.stringify(responseData.errors, null, 2)}`
+          );
+        }
+
+        submitted.value = true;
+
+        // Reset the form after 5 seconds
+        setTimeout(() => {
+          submitted.value = false;
+          form.first = "";
+          form.last = "";
+          form.email = "";
+          form.phone = "";
+          form.company = "";
+        }, 5000);
+      } catch (error) {
+        console.error("Submission failed:", error);
+      }
     };
 
     return {
