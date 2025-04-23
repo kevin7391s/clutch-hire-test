@@ -46,3 +46,26 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.submit-btn {
+  background-color: #0b476c;
+  color: #ffffff;
+  font-size: 13.45px;
+  font-family: "ABeeZee", sans-serif;
+  font-weight: 400;
+  font-size: 13.45px;
+  line-height: 16px;
+  letter-spacing: 0%;
+  width: 131px;
+  height: 34.83px;
+  padding: 10.22px 37.5px 8.61px 37.5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 51.61px;
+  margin-left: 179.76px;
+  margin-right: 35px;
+  display: block;
+}
+</style>
