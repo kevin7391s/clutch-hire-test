@@ -3,22 +3,25 @@
     <!-- Logo displayed above the form, matching the Figma design -->
     <img src="@/assets/greentech 1.png" alt="GreenTech logo" class="logo" />
 
-    <div class="form-body">
+    <div v-if="!submitted" class="form-body">
       <h1 class="form-title">Have us reach out</h1>
       <!-- FormFields handles all input UI. Passes down form object by v-model and listens for submit -->
       <FormFields v-model:form="form" @submit="onSubmit" />
     </div>
+    <ThankYou v-else />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import FormFields from "@/components/FormFields.vue";
+import ThankYou from "@/components/ThankYou.vue";
 
 export default defineComponent({
   name: "FormView",
   components: {
     FormFields,
+    ThankYou,
   },
   setup() {
     // Create a reactive form object containing all the user input fields
@@ -30,12 +33,24 @@ export default defineComponent({
       company: "",
     });
 
+    const submitted = ref(false);
     const onSubmit = () => {
-      console.log("Form submitted:", form);
+      submitted.value = true;
+
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        submitted.value = false;
+        form.first = "";
+        form.last = "";
+        form.email = "";
+        form.phone = "";
+        form.company = "";
+      }, 5000);
     };
 
     return {
       form,
+      submitted,
       onSubmit,
     };
   },
