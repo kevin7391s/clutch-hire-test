@@ -63,3 +63,13 @@ Replace the sample data with actual user input when making a submission. [You ca
 2. **Submit Data:** On submission, the form data is sent to the API endpoint using the provided API key.
 3. **Thank You Message:** A thank you message is displayed for 5 seconds after submission.
 4. **Repeat Process:** The form resets for the next user submission.
+
+
+## Finished Assesment Test
+
+To test the form submission, create a `.env` file in the root with the following content:
+VUE_APP_API_KEY= Your API key
+
+**Then run:**
+npm install  
+npm run serve
